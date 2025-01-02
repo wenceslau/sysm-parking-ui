@@ -1,0 +1,25 @@
+<main>
+  <div class="flex p-6 w-full bg-gray-100">
+      <div class="flex w-full flex-col gap-4">
+        <div class="flex bg-gray-200 p-3">
+          <p-breadcrumb class="max-w-full" [model]="items" [home]="home" />
+        </div>
+        <div class="flex bg-gray-200 p-3">
+          <h1>Course Categories!</h1>
+          <p>This is a list of course categories, click on each to see a list of cour
+        </div>
+        <router-outlet></router-outlet>
+      </div>
+    <div class="flex flex-col">
+      <h2>Development</h2>
+      <p>... </p>
+      <p><a class="btn btn-secondary" routerLink="development"  role="button">View details »</a></p>
+    </div>
+    <div class="flex flex-col">
+      <h2>IT & Software</h2>
+      <p>... </p>
+      <p><a class="btn btn-secondary" routerLink="it-software" role="button">View details »</a></p>
+    </div>
+      <router-outlet name="sidemenu"></router-outlet>
+  </div>
+</main>

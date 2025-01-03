@@ -1,7 +1,14 @@
+@import "primeicons/primeicons.css";
+
 @import "tailwindcss/base.css" layer(tailwindcss);
 @import "tailwindcss/components.css" layer(tailwindcss);
 @import "tailwindcss/utilities.css" layer(tailwindcss);
 
+html {
+  font-size: 16px;
+}
+
 body {
   padding: 0 15%;
+  background-color: rgb(249 250 251)
 }

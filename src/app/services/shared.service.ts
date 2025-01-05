@@ -16,6 +16,10 @@ export class SharedService {
   constructor() {
   }
 
+  initBreadcrumb() {
+    this.breadcrumbItems = [];
+  }
+
   addCrumb(item: MenuItem, removeLast: boolean = false) {
     if (removeLast) {
       this.removeCrumb();

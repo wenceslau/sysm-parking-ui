@@ -12,6 +12,7 @@ import {DatePicker} from 'primeng/datepicker';
 import {Breadcrumb} from 'primeng/breadcrumb';
 import {PanelMenu} from 'primeng/panelmenu';
 import { Message } from 'primeng/message';
+import { InputMask } from 'primeng/inputmask';
 
 
 import {SideMenuComponent} from './components/side-menu/side-menu.component';
@@ -30,6 +31,13 @@ import {definePreset} from "@primeng/themes";
 import { ReportComponent } from './pages/parking/report/report.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import {NgOptimizedImage} from "@angular/common";
+import {InputText} from "primeng/inputtext";
+import { VehicleTypeComponent } from './pages/parking/checkin/vehicle-type/vehicle-type.component';
+import {Button} from "primeng/button";
+import {Dialog} from "primeng/dialog";
+import {Select} from "primeng/select";
+import { EntryRecordsComponent } from './pages/parking/checkin/entry-records/entry-records.component';
+import {TableModule} from "primeng/table";
 
 const Sysm = definePreset(Aura, {
   primitive: {
@@ -56,6 +64,8 @@ const Sysm = definePreset(Aura, {
     CheckinComponent,
     ReportComponent,
     WelcomeComponent,
+    VehicleTypeComponent,
+    EntryRecordsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -69,7 +79,13 @@ const Sysm = definePreset(Aura, {
     Ripple,
     Message,
     Toast,
-    NgOptimizedImage
+    NgOptimizedImage,
+    InputText,
+    InputMask,
+    Button,
+    Dialog,
+    Select,
+    TableModule
   ],
   exports: [],
   providers: [

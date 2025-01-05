@@ -7,6 +7,7 @@ import {MenuItem} from "primeng/api";
 export class SharedService {
 
   breadcrumbItems: MenuItem[] | undefined;
+  entriesCount: number = 0;
 
   constructor() {
   }

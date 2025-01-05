@@ -1,1 +1,28 @@
-<p>checkin works!</p>
+<div id="divCheckin" class="flex flex-col items-center w-full gap-4 ">
+
+  <div class="inline-flex">
+    <p-inputmask #myInputMask autofocus id="inputPlate" class="w-full text-center" mask="***-9999"
+                 (onComplete)="onCompleteInput()" [(ngModel)]="licensePlate"/>
+  </div>
+
+  <div class="inline-flex">
+    @if (messageVisible()) {
+      <p-message [severity]="messageType">{{ messageContent }}</p-message>
+    }
+  </div>
+
+  <div>
+    <app-vehicle-type *ngIf="showVehicleType"
+                      (onSelectedType)="onSelectedType($event)"
+                      (onHideType)="onHideType()">
+    </app-vehicle-type>
+
+  </div>
+  <div>
+    <app-entry-records [registrations]="registrations">
+    </app-entry-records>
+  </div>
+
+</div>
+
+

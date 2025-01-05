@@ -13,12 +13,11 @@ export class SideMenuComponent implements OnInit{
   items: MenuItem[] | undefined;
 
   constructor(private messageService: MessageService,
-              private shared: SharedService,
+              public shared: SharedService,
               private router: Router,
               private route: ActivatedRoute) {
 
     route.params.subscribe(params => console.log("side menu id parameter", params['id']));
-
   }
 
   ngOnInit() {
@@ -34,7 +33,7 @@ export class SideMenuComponent implements OnInit{
       {
         label: 'License Plate',
         icon: 'fa-solid fa-check-double',
-        badge: '3',
+        badge: this.shared.entriesCount.toString(),
         command: () => {
           this.navigate('checkin', 'License Plate');
         }
@@ -66,5 +65,16 @@ export class SideMenuComponent implements OnInit{
     this.shared.removeCrumb();
     this.shared.addCrumb({label: name});
     this.router.navigate(['parking/' + path]);
+  }
+
+  getBadgeValue(item: MenuItem) : string {
+    if (!item.badge){
+      return '';
+    }
+
+    if (item.label === 'License Plate') {
+      return this.shared.entriesCount.toString();
+    }
+    return item.badge;
   }
 }

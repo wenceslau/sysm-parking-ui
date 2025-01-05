@@ -1,16 +1,15 @@
-<main>
-  <div class="flex p-6 w-full">
-    <div class="flex w-full flex-col gap-4">
-      <div class="flex border-solid border-2 rounded-md">
-        <p-breadcrumb class="max-w-full " [model]="shared.breadcrumbItems" [home]="home">
-        </p-breadcrumb>
-      </div>
-      <div class="flex flex-col bg-gray-200 p-3 gap-4">
-        <h1 class="font-bold" >Parking Lot</h1>
-        <p>Capacity 100 Vehicles. Parking closed.</p>
-      </div>
-      <router-outlet></router-outlet>
+<main class="flex w-full">
+  <div class="flex w-full flex-col gap-4">
+    <div class="flex border-solid border-2 rounded-md">
+      <p-breadcrumb class="max-w-full " [model]="shared.breadcrumbItems" [home]="homeMenuItem">
+      </p-breadcrumb>
     </div>
-    <app-side-menu></app-side-menu>
+    <div class="flex flex-col bg-gray-200 p-3 gap-4">
+      <h1 class="font-bold">Parking Lot</h1>
+      <p>Parking: {{shared.parkingOpened ? "Opened" : "Closed"}} </p>
+      <p>Capacity: {{shared.parkingCapacity}}</p>
+    </div>
+    <router-outlet></router-outlet>
   </div>
+  <app-side-menu [items]="sideMenuItems" ></app-side-menu>
 </main>

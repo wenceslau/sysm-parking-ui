@@ -1,4 +1,4 @@
-<div id="divCheckin" class="flex flex-col items-center w-full gap-4 ">
+<main class="flex flex-col items-center w-full gap-4 ">
 
   <div class="inline-flex">
     <p-inputmask #myInputMask autofocus id="inputPlate" class="w-full text-center" mask="***-9999"
@@ -18,11 +18,9 @@
     </app-vehicle-type>
 
   </div>
-  <div>
+  <div class="w-full">
     <app-entry-records [registrations]="registrations">
     </app-entry-records>
   </div>
 
-</div>
-
-
+</main>

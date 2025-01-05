@@ -1,5 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, signal, ViewChild} from "@angular/core";
-import {MessageService} from "primeng/api";
+import {Component, OnInit, signal, ViewChild} from "@angular/core";
 import {Registration} from "./entry-records/entry-records.component";
 import {SharedService} from "../../../services/shared.service";
 
@@ -25,6 +24,7 @@ export class CheckinComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.shared.addCrumb({label: "License Plate"}, true);
   }
 
   onCompleteInput() {
@@ -41,18 +41,18 @@ export class CheckinComponent implements OnInit {
     })
     this.shared.entriesCount = this.registrations.length;
 
+    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
     this.licensePlate = null;
     this.showVehicleType = false;
-    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
 
     this.showMessage("success");
   }
 
   onHideType() {
 
+    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' has not been registered";
     this.licensePlate = null;
     this.showVehicleType = false;
-    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' has not been registered";
 
     this.showMessage("warn");
   }

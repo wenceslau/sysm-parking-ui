@@ -1,0 +1,23 @@
+<main class="flex flex-col w-full gap-4 items-center">
+
+  <div class="text-center">
+    <form [formGroup]="formGroup">
+      <label for="integer" class="font-bold block mb-2"> Capacity </label>
+      <input pInputText id="integer" class="text-center" pKeyFilter="int" formControlName="value" />
+    </form>
+  </div>
+  <div class="card flex justify-center gap-2">
+    <p-confirmpopup #cp>
+      <ng-template pTemplate="content" let-message>
+        <div class="flex flex-col rounded p-4 gap-4">
+          <span class="font-bold text-red-400 " >{{ message.header }}</span>
+          <span>{{ message.message }}</span>
+        </div>
+      </ng-template>
+    </p-confirmpopup>
+    <p-button (onClick)="open($event)" label="Save" />
+
+<!--    <p-button label="Open" icon="fa-solid fa-car" size="small" (click)="open()"/>-->
+  </div>
+
+</main>

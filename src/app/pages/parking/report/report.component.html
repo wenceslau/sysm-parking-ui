@@ -1,1 +1,24 @@
-<p>report works!</p>
+<p-table [value]="registrations">
+  <ng-template #header>
+    <tr>
+      <th>License Plate</th>
+      <th>Vehicle Type</th>
+      <th>Entry Date</th>
+      <th>Exit Date</th>
+      <th>Duration</th>
+      <th>Rate</th>
+      <th>Amount</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-registration>
+    <tr>
+      <td>{{ registration.licensePlate }}</td>
+      <td>{{ registration.vehicleType }}</td>
+      <td>{{ registration.entryDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ registration.entryDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ registration.duration }}</td>
+      <td>{{ registration.rate }}</td>
+      <td>{{ registration.amount }}</td>
+    </tr>
+  </ng-template>
+</p-table>

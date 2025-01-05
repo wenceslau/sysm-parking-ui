@@ -1,0 +1,36 @@
+<main class="card flex justify-center">
+  <p-dialog maskStyleClass="backdrop-blur-sm" styleClass="!border-0 !bg-transparent" [(visible)]="visible">
+
+    <ng-template #headless>
+      <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl "
+           style="background-image: radial-gradient(circle at left top, lightgrey, grey)">
+
+        <div class="flex w-full justify-center items-center">
+          <i class="fa-solid fa-square-parking fa-2xl"></i>
+        </div>
+
+        <div class="inline-flex flex-col gap-2">
+          <label for="username" class="font-semibold">Username</label>
+          <input pInputText id="username" class="!bg-white/40 !border-0 !p-4 w-80"/>
+        </div>
+
+        <div class="inline-flex flex-col gap-2">
+          <label for="password" class="font-semibold">Password</label>
+          <input pInputText id="password" class="!bg-white/40 !border-0 !p-4 w-80" type="password"/>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <p-button class="w-full" label="Cancel" styleClass="!p-4 w-full !border !border-white/25 hover:!bg-white/10"
+                    (click)="closeDialog()"
+                    [text]="true"/>
+          <p-button class="w-full" label="Sign-In" styleClass="!p-4 w-full !border !border-white/25 hover:!bg-white/10"
+                    (click)="logIn()"
+                    [text]="true"/>
+        </div>
+      </div>
+    </ng-template>
+
+  </p-dialog>
+</main>
+
+<app-welcome></app-welcome>

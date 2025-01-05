@@ -1,7 +1,6 @@
-<div class=" h-lvh bg-white">
+<main class="flex flex-col h-lvh bg-white">
 
-  <div class="sticky top-0 z-10">
-    <nav>
+  <nav class="sticky top-0 z-10">
       <div class="flex bg-black items-center text-white px-12 py-4 gap-12">
         <i class="fa-solid fa-square-parking fa-2xl"></i>
         <ul class="flex items-center space-x-4">
@@ -15,17 +14,16 @@
             <a routerLink="about">About</a>
           </li>
           <li>
-            <a href="javascript:void(0)">Logout</a>
+            <a (click)="loginLogout()" class="cursor-pointer">{{shared.loggedIn ? 'Logout' : 'Login'}}</a>
           </li>
         </ul>
       </div>
-    </nav>
-  </div>
+  </nav>
 
-  <div>
+  <div class="p-6">
     <router-outlet></router-outlet>
   </div>
 
-</div>
+</main>
 
 

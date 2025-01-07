@@ -1,7 +1,8 @@
 <main class="flex flex-col bg-white">
 
   <nav class="sticky top-0 z-10">
-      <div class="flex bg-black items-center text-white px-12 py-4 gap-12">
+    <div class="flex bg-black justify-between items-center text-white px-12 py-4 gap-12">
+      <div class="flex items-center gap-12">
         <i class="fa-solid fa-square-parking fa-2xl"></i>
         <ul class="flex items-center space-x-4">
           <li>
@@ -13,11 +14,50 @@
           <li>
             <a routerLink="about">About</a>
           </li>
-          <li>
-            <a (click)="loginLogout()" class="cursor-pointer">{{shared.loggedIn ? 'Logout' : 'Login'}}</a>
-          </li>
+<!--          <li>-->
+<!--            <a (click)="loginLogout()" class="cursor-pointer">{{ shared.loggedIn ? 'Logout' : 'Login' }}</a>-->
+<!--          </li>-->
         </ul>
       </div>
+
+
+      <div class="flex items-center gap-2 ">
+        <p-button [label]="selectedLanguage" (onClick)="toggle($event)" />
+        <p-popover #op>
+          <div class="flex flex-col gap-4">
+            <div>
+              <ul class="list-none p-0 m-0 flex flex-col">
+                <li *ngFor="let lang of languages" class="flex items-center gap-2 px-2 py-3 hover:bg-[#f1f5f9] cursor-pointer rounded-border" >
+                  <span class="font-medium ">{{ lang }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </p-popover>
+        <a (click)="loginLogout()" class="cursor-pointer">
+          @if (shared.loggedIn) {
+            <i [pTooltip]="tooltipContent" tooltipPosition="right"
+               class="fa-solid fa-right-from-bracket fa-lg">
+            </i>
+          } @else {
+            <i [pTooltip]="tooltipContent" tooltipPosition="right"
+               class="fa-solid fa-right-to-bracket fa-fade fa-lg">
+            </i>
+          }
+        </a>
+        <ng-template #tooltipContent>
+          <div class="flex items-center text-sm">
+              <span>
+                @if (shared.loggedIn) {
+                  Logout
+                } @else {
+                  Login
+                }
+              </span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
   </nav>
 
   <div class="p-6">

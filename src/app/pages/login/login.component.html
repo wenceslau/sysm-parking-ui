@@ -3,7 +3,7 @@
 
     <ng-template #headless>
       <div class="flex flex-col px-8 py-8 gap-6 rounded-2xl "
-           style="background-image: radial-gradient(circle at left top, lightgrey, grey)">
+           style="background-image: radial-gradient(circle at left top, #e2e8f0, dimgrey)">
 
         <div class="flex w-full justify-center items-center">
           <i class="fa-solid fa-square-parking fa-2xl"></i>
@@ -20,7 +20,7 @@
         </div>
         <hr>
         <div class="flex items-center gap-4">
-          <p-button class="w-full" label="Cancel" styleClass="!text-red !p-2 w-full !border !border-white/25 hover:!bg-white/15"
+          <p-button class="w-full" label="Cancel" styleClass="!p-2 w-full !text-primary-50 !border !border-white/25 hover:!bg-white/15"
                     (click)="closeDialog()"
                     [text]="true"/>
           <p-button class="w-full" label="Sign-In" styleClass="!p-2 w-full !border !border-white/25 hover:!bg-white/15"

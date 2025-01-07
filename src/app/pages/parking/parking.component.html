@@ -1,10 +1,10 @@
 <main class="flex w-full">
   <div class="flex w-full flex-col gap-4">
-    <div class="flex border-solid border-2 rounded-md">
+    <div class="flex border-solid border-2 border-[#e2e8f0] rounded-md">
       <p-breadcrumb class="max-w-full " [model]="shared.breadcrumbItems" [home]="homeMenuItem">
       </p-breadcrumb>
     </div>
-    <div class="flex flex-col bg-gray-200 p-3 gap-4">
+    <div class="flex flex-col bg-[#e2e8f0] p-3 gap-4 rounded-md">
       <h1 class="font-bold">Parking Lot</h1>
       <p>Parking: {{shared.parkingOpened ? "Opened" : "Closed"}} </p>
       <p>Capacity: {{shared.parkingCapacity}}</p>

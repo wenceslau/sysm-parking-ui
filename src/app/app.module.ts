@@ -40,6 +40,8 @@ import { LoginComponent } from './pages/login/login.component';
 import {MyPreset} from "../../public/mytheme";
 import { OpenComponent } from './pages/parking/open/open.component';
 import {KeyFilter} from "primeng/keyfilter";
+import {Tooltip} from "primeng/tooltip";
+import {Popover} from "primeng/popover";
 
 
 @NgModule({
@@ -58,31 +60,33 @@ import {KeyFilter} from "primeng/keyfilter";
     LoginComponent,
     OpenComponent,
   ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    DatePicker,
-    Breadcrumb,
-    PanelMenu,
-    Badge,
-    Ripple,
-    Message,
-    Toast,
-    NgOptimizedImage,
-    InputText,
-    InputMask,
-    Button,
-    Dialog,
-    Select,
-    TableModule,
-    ButtonDirective,
-    ButtonLabel,
-    KeyFilter,
-    ReactiveFormsModule,
-    ConfirmPopupModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        FormsModule,
+        AppRoutingModule,
+        DatePicker,
+        Breadcrumb,
+        PanelMenu,
+        Badge,
+        Ripple,
+        Message,
+        Toast,
+        NgOptimizedImage,
+        InputText,
+        InputMask,
+        Button,
+        Dialog,
+        Select,
+        TableModule,
+        ButtonDirective,
+        ButtonLabel,
+        KeyFilter,
+        ReactiveFormsModule,
+        ConfirmPopupModule,
+        Tooltip,
+        Popover
+    ],
   exports: [],
   providers: [
     MessageService,

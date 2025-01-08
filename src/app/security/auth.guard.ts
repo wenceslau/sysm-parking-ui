@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import {Injectable} from "@angular/core";
-import {SharedService} from "../services/shared.service";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,13 @@ import {SharedService} from "../services/shared.service";
 export class AuthGuard implements CanActivate, CanActivateChild {
 
   constructor(private router: Router,
-              private shared: SharedService) {
+              private auth: AuthService) {
   }
 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
     console.log('canActivate ', route.url, state.url);
-    if (!this.shared.loggedIn) {
+    if (!this.auth.isAccessTokenInvalid()) {
       this.router.navigate(['/login', state.url])
       return false;
     }
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
     console.log('canActivateChild ', childRoute.url, state.url);
-    if (!this.shared.loggedIn) {
+    if (!this.auth.isAccessTokenInvalid()) {
       this.router.navigate(['/login', state.url])
       return false;
     }

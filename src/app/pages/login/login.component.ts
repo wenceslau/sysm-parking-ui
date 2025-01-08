@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {SharedService} from "../../services/shared.service";
+import {AuthService} from "../../security/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -10,10 +10,12 @@ import {SharedService} from "../../services/shared.service";
 export class LoginComponent {
 
   private redirectUrl: string = '/home';
+  private user: string = '';
+  private pass: string = '';
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private shared: SharedService) {
+              private auth: AuthService) {
 
     route.params.subscribe(params => this.redirectUrl = params['redirect']);
     console.log("redirectUrl", this.redirectUrl);
@@ -23,12 +25,10 @@ export class LoginComponent {
 
   closeDialog() {
     this.visible = false;
-    this.shared.loggedIn = false;
-    this.router.navigate(['home']);
   }
 
   logIn() {
-    this.shared.loggedIn = true;
+    this.auth.logIn(this.user, this.pass);
     this.router.navigate([this.redirectUrl]);
   }
 

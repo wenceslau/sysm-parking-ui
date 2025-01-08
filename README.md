@@ -16,3 +16,4 @@ primeng install
   npm install @fortawesome/fontawesome-free
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init
+  npm install @auth0/angular-jwt

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../security/auth.service";
+import {SharedService} from "../../services/shared.service";
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,11 @@ import {AuthService} from "../../security/auth.service";
 export class LoginComponent {
 
   private redirectUrl: string = '/home';
-  private user: string = '';
-  private pass: string = '';
+  protected user: string = '';
+  protected pass: string = '';
 
   constructor(private router: Router,
+              protected shared: SharedService,
               private route: ActivatedRoute,
               private auth: AuthService) {
 
@@ -24,12 +26,16 @@ export class LoginComponent {
   visible: boolean = true;
 
   closeDialog() {
-    this.visible = false;
+    this.router.navigate(["/home"]);
   }
 
   logIn() {
-    this.auth.logIn(this.user, this.pass);
-    this.router.navigate([this.redirectUrl]);
+    this.auth.logIn(this.user, this.pass).then(r => {
+      console.log("logIn", r);
+      this.router.navigate([this.redirectUrl]);
+    }).catch(e => {
+      this.shared.error("Invalid username or password", 10);
+    })
   }
 
 }

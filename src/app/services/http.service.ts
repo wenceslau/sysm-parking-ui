@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {lastValueFrom, Observable, Subscriber} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {HandlerService} from "./handler.service";
+import {SharedService} from "./shared.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  private apiURL = 'http://localhost:8080/api';
+  private apiURL = 'http://localhost:8080/web/parking';
 
   constructor(private http: HttpClient,
-              private handlerSrv: HandlerService) {
+              private shared: SharedService) {
   }
 
   get(parameter: Parameter, subscriber?: Subscriber<any>): Promise<any> {
@@ -52,7 +52,7 @@ export class HttpService {
     return this.httpHandler(observable, subscriber);
   }
 
-  async httpHandler(observable: Observable<any>, subscriber?: Subscriber<any>): Promise<any> {
+  private async httpHandler(observable: Observable<any>, subscriber?: Subscriber<any>): Promise<any> {
     const source$ = observable.pipe();
 
     return await lastValueFrom(source$)
@@ -62,8 +62,7 @@ export class HttpService {
       })
       .catch(error => {
         subscriber?.error(error);
-        this.handlerSrv.throwError(error);
-        return error;
+        this.shared.throwError(error);
       })
   }
 

@@ -6,8 +6,8 @@
   </div>
 
   <div class="inline-flex">
-    @if (messageVisible()) {
-      <p-message [severity]="messageType">{{ messageContent }}</p-message>
+    @if (shared.messageVisible()) {
+      <p-message [severity]="shared.messageType">{{ shared.messageContent }}</p-message>
     }
   </div>
 

@@ -47,6 +47,10 @@ const routes: Routes = [
     component: AboutComponent
   },
   {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
     path: 'login/:redirect',
     component: LoginComponent
   },

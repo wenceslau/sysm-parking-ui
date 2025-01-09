@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
     console.log('canActivate ', route.url, state.url);
-    if (!this.auth.isAccessTokenInvalid()) {
+    if (this.auth.isAccessTokenInvalid()) {
       this.router.navigate(['/login', state.url])
       return false;
     }
@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
     console.log('canActivateChild ', childRoute.url, state.url);
-    if (!this.auth.isAccessTokenInvalid()) {
+    if (this.auth.isAccessTokenInvalid()) {
       this.router.navigate(['/login', state.url])
       return false;
     }

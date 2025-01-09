@@ -42,6 +42,8 @@ import { OpenComponent } from './pages/parking/open/open.component';
 import {KeyFilter} from "primeng/keyfilter";
 import {Tooltip} from "primeng/tooltip";
 import {Popover} from "primeng/popover";
+import {provideHttpClient} from "@angular/common/http";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
 
 @NgModule({
@@ -91,6 +93,8 @@ import {Popover} from "primeng/popover";
   providers: [
     MessageService,
     ConfirmationService,
+
+    provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
@@ -101,7 +105,12 @@ import {Popover} from "primeng/popover";
           cssLayer: false,
         }
       }
-    })
+    }),
+
+    JwtHelperService,
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    {provide: Window, useValue: window},
+
   ],
   bootstrap: [AppComponent]
 })

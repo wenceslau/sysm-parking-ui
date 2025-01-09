@@ -11,16 +11,12 @@ export class CheckinComponent implements OnInit {
 
   @ViewChild('myInputMask') myInputMask: any; //Element Ref for MyInputMask
 
-  messageVisible = signal(false);
-
   licensePlate: string | null = null;
-  messageType: string = "info";
-  messageContent: string = "";
 
   showVehicleType: boolean = false;
   registrations: Registration[] = [];
 
-  constructor(private shared: SharedService) {
+  constructor(protected shared: SharedService) {
   }
 
   ngOnInit() {
@@ -41,33 +37,22 @@ export class CheckinComponent implements OnInit {
     })
     this.shared.entriesCount = this.registrations.length;
 
-    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
+    const messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
     this.licensePlate = null;
     this.showVehicleType = false;
 
-    this.showMessage("success");
+    this.focusInput();
+    this.shared.information(messageContent);
   }
 
   onHideType() {
 
-    this.messageContent = "The vehicle with license plate '" + this.licensePlate + "' has not been registered";
+    const messageContent = "The vehicle with license plate '" + this.licensePlate + "' has not been registered";
     this.licensePlate = null;
     this.showVehicleType = false;
 
-    this.showMessage("warn");
-  }
-
-  showMessage(type: string) {
     this.focusInput();
-    this.messageType = type;
-    this.messageVisible.set(true);
-
-    setTimeout(() => {
-      this.messageType = "info";
-      this.messageContent = "";
-      this.messageVisible.set(false);
-
-    }, (1000 * 3));
+    this.shared.warning(messageContent);
   }
 
   focusInput() {

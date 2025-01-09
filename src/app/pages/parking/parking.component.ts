@@ -19,8 +19,7 @@ export class ParkingComponent implements OnInit {
 
   ngOnInit() {
     this.initSideMenu();
-    this.shared.initBreadcrumb();
-    this.shared.addCrumb({label: 'Parking'}, true);
+    this.shared.addCrumb({label: 'Parking'}, true, true);
     this.homeMenuItem = {icon: 'fa-solid fa-house', routerLink: '/'};
 
     if (this.shared.parkingOpened) {

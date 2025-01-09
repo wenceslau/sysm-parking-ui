@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {SharedService} from "../../../services/shared.service";
 import {Popover} from "primeng/popover";
+import {AuthService} from "../../../security/auth.service";
 
 @Component({
   selector: 'app-top-menu',
@@ -16,13 +17,13 @@ export class TopMenuComponent {
   selectedLanguage = 'EN';
 
   constructor(private router: Router,
-              public shared: SharedService) {
+              public auth: AuthService) {
   }
 
   loginLogout() {
-    if (this.shared.loggedIn) {
-      this.shared.loggedIn = false;
-      this.router.navigate(['home']);
+    if (this.auth.logged()) {
+      this.auth.logOut();
+      this.router.navigate(['login']);
     }else {
       this.router.navigate(['login','parking']);
     }

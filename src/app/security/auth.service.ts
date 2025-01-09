@@ -3,15 +3,21 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {environment} from "../../environments/environment";
 import {StorageService} from "../services/storage.service";
 import {AuthType, HttpService, Parameter} from "../services/http.service";
+import {lastValueFrom} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public loggedIn = false;
+
   constructor(private jwtHelper: JwtHelperService,
               private http: HttpService,
+              private httpClient: HttpClient,
               private storage: StorageService) {
+    this.loggedIn = this.logged();
   }
 
   async logIn(username: string, password: string): Promise<any> {
@@ -21,19 +27,14 @@ export class AuthService {
     parameter.payload = {username, password};
     parameter.path = '/auth';
 
-    try {
-      const response = await this.http.post(parameter);
-      this.storage.addToken(response.token);
-      return response;
-    } catch (error) {
-      this.logOut();
-      return error;
-    }
+    const response = await this.http.post(parameter);
+    this.storage.addToken(response.token);
+    this.loggedIn = this.logged();
+    return response;
   }
 
   logOut(): void {
     this.storage.clearToken();
-    document.location.href = "/login";
   }
 
   singleSignOn(): void {
@@ -104,6 +105,13 @@ export class AuthService {
 
   isAccessTokenInvalid(): boolean {
     let token = this.storage.fetchToken();
+    if (!token || token === 'undefined') {
+      return true;
+    }
     return this.jwtHelper.isTokenExpired(token);
+  }
+
+  logged() {
+    return !this.isAccessTokenInvalid();
   }
 }

@@ -11,14 +11,17 @@
 
         <div class="inline-flex flex-col gap-2">
           <label for="username" class="font-semibold">Username</label>
-          <input pInputText id="username" class="!bg-white/40 !border-0 !p-2 w-60"/>
+          <input pInputText ngModel id="username" class="!bg-white/40 !border-0 !p-2 w-60" [(ngModel)]="user"/>
         </div>
 
         <div class="inline-flex flex-col gap-2">
           <label for="password" class="font-semibold">Password</label>
-          <input pInputText id="password" class="!bg-white/40 !border-0 !p-2 w-60 " type="password"/>
+          <input pInputText  id="password" class="!bg-white/40 !border-0 !p-2 w-60" type="password" [(ngModel)]="pass" />
         </div>
         <hr>
+        @if (shared.messageVisible()) {
+          <p-message [severity]="shared.messageType">{{ shared.messageContent }}</p-message>
+        }
         <div class="flex items-center gap-4">
           <p-button class="w-full" label="Cancel" styleClass="!p-2 w-full !text-primary-50 !border !border-white/25 hover:!bg-white/15"
                     (click)="closeDialog()"

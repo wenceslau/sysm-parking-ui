@@ -1,26 +1,62 @@
-import {Injectable} from '@angular/core';
-import {MenuItem} from "primeng/api";
+import {Injectable, signal} from '@angular/core';
+import {MenuItem, MessageService} from "primeng/api";
+import {AuthService} from "../security/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
-  parkingOpened: boolean = false;
-  parkingCapacity: string = '-';
-  loggedIn: boolean = false;
-
-  breadcrumbItems: MenuItem[] = [];
   entriesCount: number = 0;
+  breadcrumbItems: MenuItem[] = [];
+  parkingCapacity: string = '-';
+  parkingOpened: boolean = false;
 
-  constructor() {
+  constructor(private messageService: MessageService) {
   }
 
-  initBreadcrumb() {
-    this.breadcrumbItems = [];
+  messageVisible = signal(false);
+  messageType: string = "";
+  messageContent: string = "";
+  private showMessage(type: string, content: string, timeout: number = 3) {
+    this.messageType = type;
+    this.messageContent = content;
+    this.messageVisible.set(true);
+
+    setTimeout(() => {
+      this.messageType = "";
+      this.messageContent = "";
+      this.messageVisible.set(false);
+    }, (1000 * timeout));
   }
 
-  addCrumb(item: MenuItem, removeLast: boolean = false) {
+  success(message: string, timeout?: number) {
+    this.messageService.add({severity: 'success', summary: 'Success', detail: message});
+    this.showMessage('success', message, timeout);
+  }
+
+  information(message: string) {
+    this.messageService.add({severity: 'info', summary: 'Information', detail: message});
+    this.showMessage('info', message);
+
+  }
+
+  warning(message: string) {
+    this.messageService.add({severity: 'warning', summary: 'Warning', detail: message});
+    this.showMessage('warn', message);
+  }
+
+  error(message: string, timeout?: number) {
+    this.messageService.add({severity: 'error', summary: 'Error', detail: message});
+    this.showMessage('error', message, timeout);
+    console.error(message);
+  }
+
+  addCrumb(item: MenuItem, removeLast: boolean = false, initializer: boolean = false) {
+    if (initializer) {
+      this.breadcrumbItems = [];
+    }
+
     if (removeLast) {
       this.removeCrumb();
     }
@@ -34,4 +70,26 @@ export class SharedService {
     }
     this.breadcrumbItems = [...this.breadcrumbItems];
   }
+
+  throwError(err: any): string {
+    let errorMsg = this.extractError(err)
+    this.messageService.add({severity: 'error', summary: 'Error', detail: errorMsg});
+    return err;
+  }
+
+  private extractError(err: any): string {
+    console.log('Error...' + JSON.stringify(err))
+    let errorMessage;
+
+    errorMessage = err?.error?.message;
+    if (errorMessage)
+      return errorMessage;
+
+    errorMessage = err?.message
+    if (errorMessage)
+      return errorMessage;
+
+    return JSON.stringify(err);
+  }
+
 }

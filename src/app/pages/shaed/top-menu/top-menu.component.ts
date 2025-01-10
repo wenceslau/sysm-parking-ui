@@ -17,12 +17,12 @@ export class TopMenuComponent {
   selectedLanguage = 'EN';
 
   constructor(private router: Router,
-              public auth: AuthService) {
+              public authSrv: AuthService) {
   }
 
   loginLogout() {
-    if (this.auth.logged()) {
-      this.auth.logOut();
+    if (this.authSrv.logged()) {
+      this.authSrv.logOut();
       this.router.navigate(['login']);
     }else {
       this.router.navigate(['login','parking']);

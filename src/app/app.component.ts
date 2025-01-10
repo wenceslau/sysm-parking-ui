@@ -11,7 +11,7 @@ import {SharedService} from "./services/shared.service";
 export class AppComponent implements OnInit {
   title = 'sysm-parking-ui';
 
-  constructor(private primeng: PrimeNG, private shared: SharedService) {
+  constructor(private primeng: PrimeNG) {
   }
 
   ngOnInit() {

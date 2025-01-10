@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {lastValueFrom, Observable, Subscriber} from "rxjs";
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {SharedService} from "./shared.service";
+import {StorageService} from "./storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +11,15 @@ export class HttpService {
 
   private apiURL = 'http://localhost:8080/web/parking';
 
-  constructor(private http: HttpClient,
-              private shared: SharedService) {
+  constructor(private httpClient: HttpClient,
+              private storageSrv: StorageService,
+              private sharedSrv: SharedService) {
   }
 
   get(parameter: Parameter, subscriber?: Subscriber<any>): Promise<any> {
     let httpUrlPath = this.urlPath(parameter);
     let httpOptions = this.options(parameter);
-    let observable = this.http.get<any>(httpUrlPath, httpOptions);
+    let observable = this.httpClient.get<any>(httpUrlPath, httpOptions);
     return this.httpHandler(observable, subscriber);
   }
 
@@ -25,7 +27,7 @@ export class HttpService {
     let httpUrlPath = this.urlPath(parameter);
     let httpOptions = this.options(parameter);
     let httpPayload = parameter.payload;
-    let observable = this.http.post<any>(httpUrlPath, httpPayload, httpOptions);
+    let observable = this.httpClient.post<any>(httpUrlPath, httpPayload, httpOptions);
     return this.httpHandler(observable, subscriber);
   }
 
@@ -33,7 +35,7 @@ export class HttpService {
     let httpUrlPath = this.urlPath(parameter);
     let httpOptions = this.options(parameter);
     let httpPayload = parameter.payload;
-    let observable = this.http.put<any>(httpUrlPath, httpPayload, httpOptions);
+    let observable = this.httpClient.put<any>(httpUrlPath, httpPayload, httpOptions);
     return this.httpHandler(observable, subscriber);
   }
 
@@ -41,14 +43,14 @@ export class HttpService {
     let httpUrlPath = this.urlPath(parameter);
     let httpOptions = this.options(parameter);
     let httpPayload = parameter.payload;
-    let observable = this.http.patch<any>(httpUrlPath, httpPayload, httpOptions);
+    let observable = this.httpClient.patch<any>(httpUrlPath, httpPayload, httpOptions);
     return this.httpHandler(observable, subscriber);
   }
 
   delete(parameter: Parameter, subscriber?: Subscriber<any>): Promise<any> {
     let httpUrlPath = this.urlPath(parameter);
     let httpOptions = this.options(parameter);
-    let observable = this.http.delete<any>(httpUrlPath, httpOptions);
+    let observable = this.httpClient.delete<any>(httpUrlPath, httpOptions);
     return this.httpHandler(observable, subscriber);
   }
 
@@ -62,7 +64,8 @@ export class HttpService {
       })
       .catch(error => {
         subscriber?.error(error);
-        this.shared.throwError(error);
+        this.sharedSrv.handlerError(error);
+        throw error;
       })
   }
 
@@ -80,7 +83,7 @@ export class HttpService {
     let httpHeader = new HttpHeaders();
 
     if (parameter.authType != AuthType.NONE) {
-      httpHeader = httpHeader.append("Authorization", parameter.authType + localStorage.getItem("ekot"));
+      httpHeader = httpHeader.append("Authorization", parameter.authType + this.storageSrv.fetchToken());
     }
 
     if (parameter.contentType != ContentType.NONE) {

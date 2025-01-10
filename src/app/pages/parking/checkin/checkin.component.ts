@@ -16,11 +16,11 @@ export class CheckinComponent implements OnInit {
   showVehicleType: boolean = false;
   registrations: Registration[] = [];
 
-  constructor(protected shared: SharedService) {
+  constructor(protected sharedSrv: SharedService) {
   }
 
   ngOnInit() {
-    this.shared.addCrumb({label: "License Plate"}, true);
+    this.sharedSrv.addCrumb({label: "License Plate"}, true);
   }
 
   onCompleteInput() {
@@ -35,14 +35,14 @@ export class CheckinComponent implements OnInit {
       vehicleType: vehicleType!,
       entryDate: new Date()
     })
-    this.shared.entriesCount = this.registrations.length;
+    this.sharedSrv.entriesCount = this.registrations.length;
 
     const messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
     this.licensePlate = null;
     this.showVehicleType = false;
 
     this.focusInput();
-    this.shared.information(messageContent);
+    this.sharedSrv.information(messageContent);
   }
 
   onHideType() {
@@ -52,7 +52,7 @@ export class CheckinComponent implements OnInit {
     this.showVehicleType = false;
 
     this.focusInput();
-    this.shared.warning(messageContent);
+    this.sharedSrv.warning(messageContent);
   }
 
   focusInput() {

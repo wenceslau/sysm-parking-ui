@@ -35,7 +35,7 @@
           </div>
         </p-popover>
         <a (click)="loginLogout()" class="cursor-pointer">
-          @if (auth.logged()) {
+          @if (authSrv.logged()) {
             <i [pTooltip]="tooltipContent" tooltipPosition="right"
                class="fa-solid fa-right-from-bracket fa-lg">
             </i>
@@ -48,7 +48,7 @@
         <ng-template #tooltipContent>
           <div class="flex items-center text-sm">
               <span>
-                {{ auth.logged() ? 'Logout' : 'Login' }}
+                {{ authSrv.logged() ? 'Logout' : 'Login' }}
               </span>
           </div>
         </ng-template>

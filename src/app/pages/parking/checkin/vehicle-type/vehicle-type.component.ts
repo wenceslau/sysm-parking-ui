@@ -15,20 +15,20 @@ export class VehicleTypeComponent implements OnInit {
   vehicleType: string | null = null;
   vehicleTypes: string[] = ['CAR', 'MOTORCYCLE', 'TRUCK'];
 
-  constructor(private shared : SharedService) {
+  constructor(private sharedSrv : SharedService) {
   }
 
   ngOnInit() {
-    this.shared.addCrumb({label: 'Vehicle Types'});
+    this.sharedSrv.addCrumb({label: 'Vehicle Types'});
   }
 
   selectType() {
-    this.shared.removeCrumb();
+    this.sharedSrv.removeCrumb();
     this.onSelectedType.emit(this.vehicleType);
   }
 
   onHide() {
-    this.shared.removeCrumb();
+    this.sharedSrv.removeCrumb();
     this.onHideType.emit();
   }
 

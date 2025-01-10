@@ -13,10 +13,9 @@ export class AuthService {
 
   public loggedIn = false;
 
-  constructor(private jwtHelper: JwtHelperService,
-              private http: HttpService,
-              private httpClient: HttpClient,
-              private storage: StorageService) {
+  constructor(private jwtHelperService: JwtHelperService,
+              private httpSrv: HttpService,
+              private storageSrv: StorageService) {
     this.loggedIn = this.logged();
   }
 
@@ -27,14 +26,14 @@ export class AuthService {
     parameter.payload = {username, password};
     parameter.path = '/auth';
 
-    const response = await this.http.post(parameter);
-    this.storage.addToken(response.token);
+    const response = await this.httpSrv.post(parameter);
+    this.storageSrv.addToken(response.token);
     this.loggedIn = this.logged();
     return response;
   }
 
   logOut(): void {
-    this.storage.clearToken();
+    this.storageSrv.clearToken();
   }
 
   singleSignOn(): void {
@@ -76,7 +75,7 @@ export class AuthService {
     const clientId = environment.oauth.clientId;
     const logout = environment.oauth.logout;
 
-    let id_token = this.storage.fetchIdToken();
+    let id_token = this.storageSrv.fetchIdToken();
     if (!id_token) {
       document.location.href = "/home";
       return;
@@ -91,24 +90,24 @@ export class AuthService {
 
     const url = `${oauthUrl}/realms/${realm}/protocol/openid-connect/logout?${logoutParams.toString()}`;
 
-    this.storage.clearToken();
+    this.storageSrv.clearToken();
     document.location.href = url;
   }
 
   hasPermission(role: string): boolean {
     console.log('checking role: ' + role);
-    let access_token = this.storage.fetchToken() as string
-    let token = this.jwtHelper.decodeToken(access_token);
+    let access_token = this.storageSrv.fetchToken() as string
+    let token = this.jwtHelperService.decodeToken(access_token);
     let roles = token.realm_access.roles;
     return roles.includes(role);
   }
 
   isAccessTokenInvalid(): boolean {
-    let token = this.storage.fetchToken();
+    let token = this.storageSrv.fetchToken();
     if (!token || token === 'undefined') {
       return true;
     }
-    return this.jwtHelper.isTokenExpired(token);
+    return this.jwtHelperService.isTokenExpired(token);
   }
 
   logged() {

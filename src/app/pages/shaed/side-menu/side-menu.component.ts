@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {MenuItem, MessageService} from "primeng/api";
 import {SharedService} from "../../../services/shared.service";
+import {ParkingService} from "../../../services/parking.service";
 
 @Component({
   selector: 'app-side-menu',
@@ -13,7 +14,8 @@ export class SideMenuComponent implements OnInit, OnDestroy{
   @Input() items: MenuItem[] = [];
   @Input() customBadge: string = '';
 
-  constructor(public shared: SharedService,
+  constructor(private sharedSrv: SharedService,
+              private parkingSrv: ParkingService,
               private router: Router,
               private route: ActivatedRoute) {
 
@@ -36,14 +38,14 @@ export class SideMenuComponent implements OnInit, OnDestroy{
     }
 
     if (item.badge === '#parkingOpened'){
-      if (this.shared.parkingOpened){
+      if (this.parkingSrv.parkingOpened){
         return 'Opened';
       }
       return 'Closed';
     }
 
     if (item.badge === '#entriesCount'){
-      return this.shared.entriesCount.toString();
+      return this.sharedSrv.entriesCount.toString();
     }
 
     return item.badge;

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {SharedService} from "../../services/shared.service";
 import {Router} from "@angular/router";
+import {ParkingService} from "../../services/parking.service";
 
 @Component({
   selector: 'app-parking',
@@ -10,7 +11,8 @@ import {Router} from "@angular/router";
 })
 export class ParkingComponent implements OnInit {
 
-  constructor(public shared: SharedService,
+  constructor(public sharedSrv: SharedService,
+              public parkingSrv: ParkingService,
               private router: Router) {
   }
 
@@ -19,10 +21,10 @@ export class ParkingComponent implements OnInit {
 
   ngOnInit() {
     this.initSideMenu();
-    this.shared.addCrumb({label: 'Parking'}, true, true);
+    this.sharedSrv.addCrumb({label: 'Parking'}, true, true);
     this.homeMenuItem = {icon: 'fa-solid fa-house', routerLink: '/'};
 
-    if (this.shared.parkingOpened) {
+    if (this.parkingSrv.parkingOpened) {
       this.router.navigate(['parking/checkin']);
     }
   }

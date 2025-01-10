@@ -3,6 +3,7 @@ import {SharedService} from "../../../services/shared.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ConfirmationService} from "primeng/api";
+import {ParkingService} from "../../../services/parking.service";
 
 @Component({
   selector: 'app-open',
@@ -13,7 +14,8 @@ export class OpenComponent implements OnInit {
 
   formGroup!: FormGroup;
 
-  constructor(private shared: SharedService,
+  constructor(private sharedSrv: SharedService,
+              private parkingSrv: ParkingService,
               private confirmationService: ConfirmationService,
               private router: Router) {
     this.formGroup = new FormGroup({
@@ -22,11 +24,11 @@ export class OpenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.shared.addCrumb({label: 'Open Gate'}, true);
+    this.sharedSrv.addCrumb({label: 'Open Gate'}, true);
   }
 
   open(event: Event) {
-    if (this.shared.parkingOpened) {
+    if (this.parkingSrv.parkingOpened) {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         header: 'Parking is already opened',
@@ -35,16 +37,22 @@ export class OpenComponent implements OnInit {
           this.openGate();
         }
       });
-    }else {
+    } else {
       this.openGate();
     }
-
   }
 
   openGate() {
-    this.shared.parkingCapacity =  this.formGroup.value.value;
-    this.shared.parkingOpened = true;
-    this.router.navigate(['parking','checkin']);
+    let capacity = this.formGroup.value.value;
+
+    this.parkingSrv.open(capacity).then(() => {
+      this.parkingSrv.parkingOpened = true;
+      this.sharedSrv.success('Parking gate opened successfully');
+      this.router.navigate(['parking', 'checkin']);
+    }).catch(err => {
+      this.sharedSrv.error('Failed to open parking gate');
+    });
+
   }
 
 }

@@ -15,9 +15,9 @@ export class LoginComponent {
   protected pass: string = '';
 
   constructor(private router: Router,
-              protected shared: SharedService,
+              protected sharedSrv: SharedService,
               private route: ActivatedRoute,
-              private auth: AuthService) {
+              private authSrv: AuthService) {
 
     route.params.subscribe(params => this.redirectUrl = params['redirect']);
     console.log("redirectUrl", this.redirectUrl);
@@ -30,11 +30,12 @@ export class LoginComponent {
   }
 
   logIn() {
-    this.auth.logIn(this.user, this.pass).then(r => {
+    console.log(this.redirectUrl)
+    this.authSrv.logIn(this.user, this.pass).then(r => {
       console.log("logIn", r);
       this.router.navigate([this.redirectUrl]);
     }).catch(e => {
-      this.shared.error("Invalid username or password", 10);
+      this.sharedSrv.error("Invalid username or password", 10);
     })
   }
 

@@ -10,7 +10,7 @@ export class EntryRecordsComponent implements OnInit, OnDestroy {
 
   @Input() registrations!: Registration[];
 
-  constructor(private shared: SharedService) {
+  constructor() {
     this.registrations = [
       {
         id: '1',

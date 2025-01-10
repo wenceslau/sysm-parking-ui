@@ -11,8 +11,8 @@ export class ReportComponent {
 
   registrations!: Registration[];
 
-  constructor(private shared : SharedService) {
-    this.shared.addCrumb({label: 'Report'}, true);
+  constructor(private sharedSrv : SharedService) {
+    this.sharedSrv.addCrumb({label: 'Report'}, true);
   }
 
 }

@@ -7,14 +7,22 @@ import {Subscriber} from "rxjs";
 })
 export class ParkingService {
 
-  parkingCapacity: number | undefined;
-  parkingOpened: boolean = false;
+  private parkingStatus: { isOpen: boolean, capacity: number, occupation: number } = {isOpen: false, capacity: 0, occupation: 0};
 
   constructor(private httpSrv: HttpService) {
+    this.status();
   }
 
-   open(capacity: number, subscriber?: Subscriber<any>): Promise<any> {
-    this.parkingCapacity = capacity;
+  status() {
+    const parameter = new Parameter();
+    parameter.path = "/status";
+    this.httpSrv.get(parameter).then(r => {
+      this.parkingStatus = r;
+    });
+  }
+
+  open(capacity: number, subscriber?: Subscriber<any>): Promise<any> {
+    this.parkingStatus.capacity = capacity;
     const parameter = new Parameter();
     parameter.path = "/open/" + capacity;
     parameter.contentType = ContentType.NONE;
@@ -32,6 +40,22 @@ export class ParkingService {
     const parameter = new Parameter();
     parameter.path = "/report"
     return this.httpSrv.get(parameter, subscribe);
+  }
+
+  setOpen() {
+    this.parkingStatus.isOpen = true;
+  }
+
+  get isOpen() {
+    return this.parkingStatus.isOpen;
+  }
+
+  get capacity() {
+    return this.parkingStatus.capacity;
+  }
+
+  get occupation() {
+    return this.parkingStatus.occupation;
   }
 
 }

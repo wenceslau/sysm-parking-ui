@@ -8,23 +8,9 @@ import {SharedService} from "../../../../services/shared.service";
 })
 export class EntryRecordsComponent implements OnInit, OnDestroy {
 
-  @Input() registrations!: Registration[];
+  @Input() parkedVehicles!: ParkedVehicle[];
 
   constructor() {
-    this.registrations = [
-      {
-        id: '1',
-        licensePlate: 'ABC-123',
-        vehicleType: 'CAR',
-        entryDate: new Date()
-      },
-      {
-        id: '2',
-        licensePlate: 'XYZ-987',
-        vehicleType: 'MOTORCYCLE',
-        entryDate: new Date()
-      }
-    ];
   }
 
   ngOnInit() {
@@ -35,12 +21,18 @@ export class EntryRecordsComponent implements OnInit, OnDestroy {
 }
 
 export interface Registration {
-  id: string;
-  licensePlate: string;
-  vehicleType: string;
-  entryDate: Date;
-  exitDate?: Date;
-  duration?: number;
-  rate?: number;
-  amount?: number;
+  parkedVehicles: ParkedVehicle[];
+  checkoutVehicles: CheckoutVehicle[];
+}
+
+export interface ParkedVehicle {
+  plate: string;
+  checkIn: Date;
+}
+
+export interface CheckoutVehicle {
+  plate: string;
+  checkOut: Date;
+  duration: number;
+  amount: number;
 }

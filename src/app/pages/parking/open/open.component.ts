@@ -28,7 +28,7 @@ export class OpenComponent implements OnInit {
   }
 
   open(event: Event) {
-    if (this.parkingSrv.parkingOpened) {
+    if (this.parkingSrv.isOpen) {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         header: 'Parking is already opened',
@@ -46,7 +46,7 @@ export class OpenComponent implements OnInit {
     let capacity = this.formGroup.value.value;
 
     this.parkingSrv.open(capacity).then(() => {
-      this.parkingSrv.parkingOpened = true;
+      this.parkingSrv.setOpen();
       this.sharedSrv.success('Parking gate opened successfully');
       this.router.navigate(['parking', 'checkin']);
     }).catch(err => {

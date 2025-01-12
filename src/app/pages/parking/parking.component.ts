@@ -24,7 +24,7 @@ export class ParkingComponent implements OnInit {
     this.sharedSrv.addCrumb({label: 'Parking'}, true, true);
     this.homeMenuItem = {icon: 'fa-solid fa-house', routerLink: '/'};
 
-    if (this.parkingSrv.parkingOpened) {
+    if (this.parkingSrv.isOpen) {
       this.router.navigate(['parking/checkin']);
     }
   }

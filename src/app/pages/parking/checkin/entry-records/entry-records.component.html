@@ -1,4 +1,4 @@
-<p-table [value]="registrations">
+<p-table [value]="parkedVehicles">
   <ng-template #header>
     <tr>
       <th>License Plate</th>
@@ -6,11 +6,11 @@
       <th>Entry Date</th>
     </tr>
   </ng-template>
-  <ng-template #body let-registration>
+  <ng-template #body let-parked>
     <tr>
-      <td>{{ registration.licensePlate }}</td>
-      <td>{{ registration.vehicleType }}</td>
-      <td>{{ registration.entryDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ parked.plate }}</td>
+      <td>{{ parked.vehicleType }}</td>
+      <td>{{ parked.checkIn | date: 'dd/MM/yyyy HH:mm' }}</td>
     </tr>
   </ng-template>
 </p-table>

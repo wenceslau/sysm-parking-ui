@@ -38,7 +38,7 @@ export class SideMenuComponent implements OnInit, OnDestroy{
     }
 
     if (item.badge === '#parkingOpened'){
-      if (this.parkingSrv.parkingOpened){
+      if (this.parkingSrv.isOpen){
         return 'Opened';
       }
       return 'Closed';

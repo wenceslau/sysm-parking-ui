@@ -1,6 +1,7 @@
 import {Component, OnInit, signal, ViewChild} from "@angular/core";
-import {Registration} from "./entry-records/entry-records.component";
 import {SharedService} from "../../../services/shared.service";
+import {ParkingService} from "../../../services/parking.service";
+import {ParkedVehicle} from "./entry-records/entry-records.component";
 
 @Component({
   selector: "app-checkin",
@@ -14,13 +15,15 @@ export class CheckinComponent implements OnInit {
   licensePlate: string | null = null;
 
   showVehicleType: boolean = false;
-  registrations: Registration[] = [];
+  parkedVehicles: ParkedVehicle[] = [];
 
-  constructor(protected sharedSrv: SharedService) {
+  constructor(protected sharedSrv: SharedService,
+              protected parkingSrv: ParkingService) {
   }
 
   ngOnInit() {
     this.sharedSrv.addCrumb({label: "License Plate"}, true);
+    this.vehiclesParked();
   }
 
   onCompleteInput() {
@@ -29,20 +32,46 @@ export class CheckinComponent implements OnInit {
 
   onSelectedType(vehicleType: string) {
 
-    this.registrations.push({
-      id: this.registrations.length.toString(),
+    let request = {
       licensePlate: this.licensePlate!,
-      vehicleType: vehicleType!,
-      entryDate: new Date()
+      vehicleType: vehicleType!
+    };
+
+
+    this.parkingSrv.register(request).then(r => {
+      if (r.type === "checkIn") {
+        this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been registered" +
+          " with rate: " + r.rate + "€/hour");
+      }else if (r.type === "checkOut") {
+        this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been checked out. " +
+          "Duration: "+r.duration+". Amount: " + r.amountToPay + "€");
+      }
+      this.licensePlate = null;
+
+
+    }).finally(() => {
+      this.showVehicleType = false;
+      this.focusInput();
+      this.vehiclesParked();
+
     })
-    this.sharedSrv.entriesCount = this.registrations.length;
 
-    const messageContent = "The vehicle with license plate '" + this.licensePlate + "' and type '" + vehicleType + "' has been registered";
-    this.licensePlate = null;
-    this.showVehicleType = false;
 
-    this.focusInput();
-    this.sharedSrv.information(messageContent);
+  }
+
+  private vehiclesParked() {
+
+    this.parkingSrv.report().then(r => {
+
+      this.parkedVehicles = r.parkedVehicles;
+      this.parkedVehicles.sort((a, b) => b.checkIn.toString().localeCompare(a.checkIn.toString()));
+
+      this.sharedSrv.entriesCount = this.parkedVehicles.length;
+
+    }).catch(() => {
+      this.sharedSrv.error("Failed to retrieve parking registrations");
+
+    });
   }
 
   onHideType() {

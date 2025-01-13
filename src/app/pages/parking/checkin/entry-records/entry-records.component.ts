@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {SharedService} from "../../../../services/shared.service";
+import {ParkedVehicle} from "../../@models/models";
 
 @Component({
   selector: 'app-entry-records',
@@ -18,21 +18,4 @@ export class EntryRecordsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
-}
-
-export interface Registration {
-  parkedVehicles: ParkedVehicle[];
-  checkoutVehicles: CheckoutVehicle[];
-}
-
-export interface ParkedVehicle {
-  plate: string;
-  checkIn: Date;
-}
-
-export interface CheckoutVehicle {
-  plate: string;
-  checkOut: Date;
-  duration: number;
-  amount: number;
 }

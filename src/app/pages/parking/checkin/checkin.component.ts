@@ -1,7 +1,7 @@
 import {Component, OnInit, signal, ViewChild} from "@angular/core";
 import {SharedService} from "../../../services/shared.service";
 import {ParkingService} from "../../../services/parking.service";
-import {ParkedVehicle} from "./entry-records/entry-records.component";
+import {ParkedVehicle} from "../@models/models";
 
 @Component({
   selector: "app-checkin",

@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ParkedVehicle} from "../../@models/models";
+import {CheckInVehicle} from "../../@models/models";
 
 @Component({
   selector: 'app-entry-records',
@@ -8,7 +8,7 @@ import {ParkedVehicle} from "../../@models/models";
 })
 export class EntryRecordsComponent implements OnInit, OnDestroy {
 
-  @Input() parkedVehicles!: ParkedVehicle[];
+  @Input() parkedVehicles!: CheckInVehicle[];
 
   constructor() {
   }

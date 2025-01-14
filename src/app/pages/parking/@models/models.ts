@@ -1,14 +1,15 @@
 export interface Register {
-  parkedVehicles: ParkedVehicle[];
-  checkoutVehicles: CheckoutVehicle[];
+  parkedVehicles: CheckInVehicle[];
+  checkoutVehicles: CheckOutVehicle[];
 }
 
-export interface ParkedVehicle {
+export interface CheckInVehicle {
   plate: string;
+  vehicleType: string;
   checkIn: Date;
 }
 
-export interface CheckoutVehicle {
+export interface CheckOutVehicle {
   plate: string;
   checkOut: Date;
   duration: number;

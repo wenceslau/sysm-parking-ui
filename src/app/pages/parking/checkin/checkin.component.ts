@@ -1,7 +1,7 @@
 import {Component, OnInit, signal, ViewChild} from "@angular/core";
 import {SharedService} from "../../../services/shared.service";
 import {ParkingService} from "../../../services/parking.service";
-import {ParkedVehicle} from "../@models/models";
+import {CheckOutVehicle, CheckInVehicle} from "../@models/models";
 
 @Component({
   selector: "app-checkin",
@@ -15,15 +15,19 @@ export class CheckinComponent implements OnInit {
   licensePlate: string | null = null;
 
   showVehicleType: boolean = false;
-  parkedVehicles: ParkedVehicle[] = [];
+  checkInVehicles: CheckInVehicle[] = [];
+  checkOutVehicles: CheckOutVehicle[] = [];
+
 
   constructor(protected sharedSrv: SharedService,
               protected parkingSrv: ParkingService) {
+    parkingSrv.status();
   }
 
   ngOnInit() {
     this.sharedSrv.addCrumb({label: "License Plate"}, true);
-    this.vehiclesParked();
+    this.checkInReport();
+    this.checkOutReport();
   }
 
   onCompleteInput() {
@@ -40,8 +44,8 @@ export class CheckinComponent implements OnInit {
 
     this.parkingSrv.register(request).then(r => {
       if (r.type === "checkIn") {
-        this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been registered" +
-          " with rate: " + r.rate + "€/hour");
+        this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been registered " +
+          "with rate: " + r.rate + " €/hour");
       }else if (r.type === "checkOut") {
         this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been checked out. " +
           "Duration: "+r.duration+". Amount: " + r.amountToPay + "€");
@@ -52,24 +56,39 @@ export class CheckinComponent implements OnInit {
     }).finally(() => {
       this.showVehicleType = false;
       this.focusInput();
-      this.vehiclesParked();
+      this.checkInReport();
+      this.checkOutReport();
 
     })
 
 
   }
 
-  private vehiclesParked() {
+  private checkInReport() {
 
-    this.parkingSrv.report().then(r => {
+    this.parkingSrv.checkInReport().then(response => {
 
-      this.parkedVehicles = r.parkedVehicles;
-      this.parkedVehicles.sort((a, b) => b.checkIn.toString().localeCompare(a.checkIn.toString()));
+      this.checkInVehicles = response;
+      this.checkInVehicles.sort((a, b) => b.checkIn.toString().localeCompare(a.checkIn.toString()));
 
-      this.sharedSrv.entriesCount = this.parkedVehicles.length;
+      this.sharedSrv.entriesCount = this.checkInVehicles.length;
+
+    }).catch((r) => {
+      console.log(r);
+      this.sharedSrv.error("Failed to retrieve parking registrations checkIn");
+
+    });
+  }
+
+  private checkOutReport() {
+
+    this.parkingSrv.checkOutReport().then(response => {
+
+      this.checkOutVehicles = response;
+      this.checkOutVehicles.sort((a, b) => b.checkOut.toString().localeCompare(a.checkOut.toString()));
 
     }).catch(() => {
-      this.sharedSrv.error("Failed to retrieve parking registrations");
+      this.sharedSrv.error("Failed to retrieve parking registrations checkOut");
 
     });
   }

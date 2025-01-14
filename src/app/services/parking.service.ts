@@ -36,6 +36,18 @@ export class ParkingService {
     return this.httpSrv.post(parameter, subscriber);
   }
 
+  checkInReport(subscribe?: Subscriber<any>): Promise<any> {
+    const parameter = new Parameter();
+    parameter.path = "/checkInReport";
+    return this.httpSrv.get(parameter, subscribe);
+  }
+
+  checkOutReport(subscribe?: Subscriber<any>): Promise<any> {
+    const parameter = new Parameter();
+    parameter.path = "/checkOutReport";
+    return this.httpSrv.get(parameter, subscribe);
+  }
+
   report(date?: Date, subscribe?: Subscriber<any>): Promise<any> {
     const parameter = new Parameter();
     let strDate = "";

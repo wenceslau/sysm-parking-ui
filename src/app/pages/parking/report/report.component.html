@@ -19,8 +19,8 @@
         <tr>
           <td>{{ registration.plate }}</td>
           <td>{{ registration.vehicleType }}</td>
-          <td>{{ registration.checkIn | date: 'dd/MM/yyyy' }}</td>
-          <td>{{ registration.checkOut | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ registration.checkIn | date: 'dd/MM/yyyy HH:mm' }}</td>
+          <td>{{ registration.checkOut | date: 'dd/MM/yyyy HH:mm' }}</td>
           <td>{{ registration.duration }}</td>
           <td>{{ registration.rate }}</td>
           <td>{{ registration.amount }}</td>

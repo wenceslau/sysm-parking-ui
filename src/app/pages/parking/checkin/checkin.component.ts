@@ -46,9 +46,9 @@ export class CheckinComponent implements OnInit {
       if (r.type === "checkIn") {
         this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been registered " +
           "with rate: " + r.rate + " €/hour");
-      }else if (r.type === "checkOut") {
+      } else if (r.type === "checkOut") {
         this.sharedSrv.information("The vehicle with license plate '" + r.plate + "' has been checked out. " +
-          "Duration: "+r.duration+". Amount: " + r.amountToPay + "€");
+          "Duration: " + r.duration + ". Amount: " + r.amountToPay + "€");
       }
       this.licensePlate = null;
 
@@ -69,7 +69,7 @@ export class CheckinComponent implements OnInit {
     this.parkingSrv.checkInReport().then(response => {
 
       this.checkInVehicles = response;
-      this.checkInVehicles.sort((a, b) => b.checkIn.toString().localeCompare(a.checkIn.toString()));
+      this.checkInVehicles.sort((a, b) => b.checkIn?.toString().localeCompare(a.checkIn?.toString()));
 
       this.sharedSrv.entriesCount = this.checkInVehicles.length;
 
@@ -85,9 +85,10 @@ export class CheckinComponent implements OnInit {
     this.parkingSrv.checkOutReport().then(response => {
 
       this.checkOutVehicles = response;
-      this.checkOutVehicles.sort((a, b) => b.checkOut.toString().localeCompare(a.checkOut.toString()));
+      this.checkOutVehicles.sort((a, b) => b.checkOut?.toString().localeCompare(a.checkOut?.toString()));
 
-    }).catch(() => {
+    }).catch((r) => {
+      console.log(r);
       this.sharedSrv.error("Failed to retrieve parking registrations checkOut");
 
     });

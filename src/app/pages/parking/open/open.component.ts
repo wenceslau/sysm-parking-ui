@@ -14,7 +14,7 @@ export class OpenComponent implements OnInit {
 
   formGroup!: FormGroup;
 
-  constructor(private sharedSrv: SharedService,
+  constructor(public sharedSrv: SharedService,
               private parkingSrv: ParkingService,
               private confirmationService: ConfirmationService,
               private router: Router) {

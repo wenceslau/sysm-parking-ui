@@ -14,15 +14,18 @@ export class SharedService {
   }
 
   addCrumb(item: MenuItem, removeLast: boolean = false, initializer: boolean = false) {
-    if (initializer) {
-      this.breadcrumbItems = [];
-    }
 
-    if (removeLast) {
-      this.removeCrumb();
-    }
-    this.breadcrumbItems.push(item);
-    this.breadcrumbItems = [...this.breadcrumbItems];
+      if (initializer) {
+        this.breadcrumbItems = [];
+      }
+
+    setTimeout(() => {
+      if (removeLast) {
+        this.removeCrumb();
+      }
+      this.breadcrumbItems.push(item);
+      this.breadcrumbItems = [...this.breadcrumbItems];
+    }, 100);
   }
 
   removeCrumb() {
@@ -89,7 +92,7 @@ export class SharedService {
   }
 
   error(message: string, timeout?: number) {
-    this.messageService.add({severity: 'error', summary: 'Error', detail: message});
+    this.messageService.add({severity: 'error', summary: 'Error', detail: message, life: 3000});
     this.showMessage('error', message, timeout);
     console.error(message);
   }
